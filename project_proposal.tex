@@ -1,0 +1,54 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+
+\begin{document}
+
+\begin{center}
+	\LARGE{\textbf{COMBINING SYMBOLIC EXPRESSIONS AND BLACK BOX FUNCTION EVALUATIONS IN NEURAL PROGRAMS}} \\
+    \vspace{1em}
+    \Large{Project Proposal} \\
+    \vspace{1em}
+        
+    \normalsize\textbf{Amatullah Sethjiwala, Arth Beladiya, Biljith Thadichi, Dheeraj Ravindranath} 
+    \normalsize{amatullah.sethjiwala@colorado.edu, arbe7791@colorado.edu, biljith.thadichi@colorado.edu, dhmu3474@colorado.edu}
+\end{center}
+	
+\begin{normalsize}
+    
+\section{Motivation}
+
+For this project, we would like to replicate a conference paper published in ICLR 2018 \cite{originalpaper}. The paper introduces a novel Neural Programming technique for equation verification and completion. Neural Programming involves training Neural Networks to learn logic, mathematics, or computer programs. Until now, most neural programming research either relies solely on black-box function evaluations that do not capture the structure of the program, or on the availability of comprehensive program execution traces which are expensive to obtain. Both the methods have thus failed to generalize for larger equations and of larger depth. The paper aims to solve this problem by introducing a flexible and scalable framework for neural programming using Tree-LSTMs. It combines knowledge of symbolic representations of the relationships between the variables and the function along with black-box function evaluations. We would like to replicate the paper to check its veracity on trigonometric functions \cite{trigidentities}. On successful replication, we’d like to extend the paper from just solving trigonometric expressions, and equalities to in-equalities/derivatives. 
+      
+\section{Why Machine Learning?}
+    
+    Machine learning algorithms, like neural networks, are excellent function approximators. They are the popular choice to model the input-output relationships. Although Simple NN based algorithms like Fully-Connected/Recursive NNs perform well,  they lack the ability to “reason”. Advanced algorithms like Tree Long Short-Term Memory (TreeLSTM) networks have been proven \cite{treelstm} to be powerful models to capture the semantics in data, which in our case is the compositionality of the equation and the relationships between the tokens. Thus, TreeLSTMs offer a perfect solution to model and evaluate symbolic expressions. The black-box part of the approach is implemented by supplementing our training data set with functional expression evaluations which are expected to increase the performance of the model.  In this project, we aim to compare TreeLSTM with other models such as RNN, LSTM and TreeNN, and the baseline model Sympy. The model on successful implementation in production can replace the systems that power mathematical question answering systems (QA) like Mathematica. 
+    
+\section{Data Generation}
+        
+As the data used to train this model is a set of correct and incorrect equations, we generate them using a set of axioms and identities - in the  domain of trigonometry - scraped from wikipedia. The scraped axioms and equations are then used to generate random equations. As random equations have more incorrect equations (identities) than correct ones, we use an approach from the paper called sub-tree matching algorithm to generate new identities. Finally, Equation verification is done using Sympy \cite{sympy}. Thus, we will be generating the dataset for this project.   
+
+\section{Approach}
+
+Our work is broadly divided into two parts. Mathematical Equation Modeling, and Designing TreeLSTMs. The former involves implementing the CFG for mathematical identities; generation and verification of the dataset as explained above; generation of input-output examples (function evaluation) of trigonometric/algebraic expressions; and implementing a data-structure to represent numbers/expressions/equations as trees. The latter part involves designing TreeLSTMs for symbolic expressions and functional evaluations using MxNet. Upon successful verification of the model’s performance against the baselines (as mentioned in the previous sections), we would like to evaluate the latter model’s performance on Equation completion tasks. 
+\paragraph{}
+The paper claims to have a data generation framework that can be extended to inequalities, and other system of equations. We would like to verify this claim by generating equations involving inequalities, and check if TreeLSTMs generalize well compared to other models. We would also like to
+check our model's performance on symbolic expressions involving ordinary differential equations.
+        
+\begin{thebibliography}{}
+\bibitem{originalpaper} Arabshahi, F., Singh, S. and Anandkumar, A., 2018. Combining symbolic expressions and black-box function evaluations for training neural programs. In International Conference on Learning Representations.
+
+\bibitem{trigidentities} https://en.wikipedia.org/wiki/List\_of\_trigonometric\_identities
+
+\bibitem{sympy} Aaron Meurer, Christopher P Smith, Mateusz Paprocki, Ondrej Cert́ik, Sergey B Kirpichev, Matthew
+Rocklin, AMiT Kumar, Sergiu Ivanov, Jason K Moore, Sartaj Singh, et al. Sympy: symbolic computing in python. PeerJ Computer Science, 3:e103, 2017
+
+\bibitem{treelstm} Kai Sheng Tai, Richard Socher, and Christopher D Manning. Improved semantic representations from
+tree-structured long short-term memory networks. In Proceedings of the 53rd Annual Meeting
+of the Association for Computational Linguistics and the 7th International Joint Conference on
+Natural Language Processing (Volume 1: Long Papers), volume 1, pp. 1556–1566, 2015.
+
+\end{thebibliography}
+\end{normalsize}
+  
+\end{document}
